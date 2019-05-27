@@ -1,6 +1,6 @@
 node { 
     stage('scm checkout'){
-        git 'https://github.com/narendra311777/myspring.git'
+        git 'https://github.com/narendra311777/mycode.git'
     }
     stage('compile'){
                 def mvnHome = tool name: 'M2' , type: 'maven'
