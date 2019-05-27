@@ -1,9 +1,30 @@
-node {
-   stage('scm checkout'){
-       git 'https://github.com/narendra311777/DevOpsClassCodes.git'
-       }
-       stage('build-package'){
-         def mvnHome= tool name: 'M2'
-         sh "${mvnHome}/bin/mvn package"
-         }
-       }
+node { 
+    stage('scm checkout'){
+        git 'https://github.com/narendra311777/myspring.git'
+    }
+    stage('compile'){
+                def mvnHome = tool name: 'M2' , type: 'maven'
+                sh "${mvnHome}/bin/mvn compile"
+    }
+    stage('test'){
+                def mvnHome = tool name: 'M2' , type: 'maven'
+                sh "${mvnHome}/bin/mvn test"
+    }
+     stage('SonarQube Analysis') {
+        def mvnHome =  tool name: 'M2', type: 'maven'
+        withSonarQubeEnv('sonarqube') { 
+          sh "${mvnHome}/bin/mvn sonar:sonar"
+        }
+    }
+    stage('package'){
+                def mvnHome = tool name: 'M2' , type: 'maven'
+                sh "${mvnHome}/bin/mvn package"
+    }
+     stage('Email Notification'){
+      mail bcc: '', body: '''Hi Welcome to jenkins email alerts
+      Thanks
+      Hari''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'ram311777@gmail.com'
+   }
+   
+}
+    
