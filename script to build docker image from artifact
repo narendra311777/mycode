@@ -1,0 +1,13 @@
+rm -rf docker
+mkdir docker
+cd docker
+cp /var/lib/jenkins/workspace/pipeline/target/addressbook.war .
+touch dockerfile
+cat <<EOF>>dockerfile
+FROM tomcat
+ADD addressbook.war /usr/local/apache-tomcat-8.5.40/webapps
+CMD "catalina.sh" "run"
+EXPOSE 8080
+EOF
+sudo docker build -t narendra311777/deployimage .
+sudo docker run -itd --name myapp -p 9999:8080 narendra311777/deployimage
