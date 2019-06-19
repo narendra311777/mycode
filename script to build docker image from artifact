@@ -11,3 +11,5 @@ EXPOSE 8080
 EOF
 sudo docker build -t narendra311777/deployimage .
 sudo docker run -itd --name myapp -p 9999:8080 narendra311777/deployimage
+sudo docker tag myapp narendra311777/myapp
+sudo docker push
