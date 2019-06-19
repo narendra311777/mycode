@@ -15,11 +15,11 @@
  we can make that artifact into docker image and push that image to docker hub or future purpose of creating kubernetes and docker swarms
  we can use ssh-agent plugin and configure that plugin with secret key of target machine and create a stage in pipeline and run the job    ater creating artifact it will deploy the artifact into target remote system it may be dev or test or production.
 thank you  
+run the shell script to make artifacts into docker images and pull into dockerhub
+create kubernetes cluster using kubectl or minikube and write deployment and service yaml files to create services to end users.
+we can perform blue green deployment strategy using deployment objects
 
 
 
 
-files to check 
-jenkins 
-docker file from artifact
-dockerfile 
+
