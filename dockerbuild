@@ -1,4 +1,4 @@
-pipeline {
+11pipeline {
   environment {
     registry = "narendra311777/docker-test"
     registryCredential = 'docker'
@@ -14,14 +14,14 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+          dockerImage = docker.build narendra311777/docker-test + ":$BUILD_NUMBER"
         }
       }
     }
     stage('Deploy Image') {
       steps{
         script {
-          docker.withRegistry( '', registryCredential ) {
+          docker.withRegistry( 'narendra311777', 'docker' ) {
             dockerImage.push()
           }
         }
