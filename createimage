@@ -18,4 +18,4 @@ node {
      app=docker.build("narendra311777/mycode")
      }
      
-    
+    }
