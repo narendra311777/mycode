@@ -1,17 +1,9 @@
-11pipeline {
-  environment {
-    registry = "narendra311777/docker-test"
-    registryCredential = 'docker'
-    dockerImage = ''
-  }
-  agent any
-  stages {
-    stage('Cloning Git') {
-      steps {
+node { 
+    stage('scm checkout'){
         git 'https://github.com/narendra311777/mycode.git'
-      }
-    }
-    stage('Building image') {
+  }
+  
+  stage('Building image') {
       steps{
         script {
           dockerImage = docker.build narendra311777/docker-test + ":$BUILD_NUMBER"
