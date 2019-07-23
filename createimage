@@ -10,3 +10,12 @@ node {
                 def mvnHome = tool name: 'M2' , type: 'maven'
                 sh "${mvnHome}/bin/mvn test"
     }
+ stage('package'){
+                def mvnHome = tool name: 'M2' , type: 'maven'
+                sh "${mvnHome}/bin/mvn package"
+    }
+    stage('build-image'){
+     app=docker.build("narendra311777/mycode")
+     }
+     
+    
