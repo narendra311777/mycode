@@ -3,26 +3,13 @@ node {
         git 'https://github.com/narendra311777/mycode.git'
   }
   
-  stage('Building image') {
-      steps{
-        script {
-          dockerImage = docker.build narendra311777/docker-test + ":$BUILD_NUMBER"
-        }
-      }
-    }
-    stage('Deploy Image') {
-      steps{
-        script {
-          docker.withRegistry( 'narendra311777', 'docker' ) {
-            dockerImage.push()
-          }
-        }
-      }
-    }
-    stage('Remove Unused docker image') {
-      steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
-      }
-    }
-  }
+  stage('build-image'){
+     app = docker.build("narendra311777/mycode")
+     }
+   stage('publish-image'){
+     docker.withRegistry('https://registry.hub.docker.com','docker'){
+     app.push("${env.BUILD_NUMBER}")
+     app.push("latest")
 }
+}
+   }
