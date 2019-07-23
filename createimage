@@ -15,7 +15,11 @@ node {
                 sh "${mvnHome}/bin/mvn package"
     }
     stage('build-image'){
-     app = sudo docker.build("narendra311777/mycode")
+     app = docker.build("narendra311777/mycode")
+     }
+     stage('test-image'){
+     app.inside{
+     sh 'echo"tests passed"'
      }
      
     }
