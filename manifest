@@ -4,4 +4,4 @@ applications:
   instances: 1
   memory: 800m
   path: target/addressbook.war
-  buildpack: https://github.com/cloudfoundry/java-buildpack.git
+  
