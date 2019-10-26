@@ -17,7 +17,7 @@ node {
     }
      withCredentials([usernameColonPassword(credentialsId: 'pcf_login', variable: 'pcf')]) {
     // some block
-     sh 'cf login -a http://api.run.pivotal.io -u $USERNAME -p $PASSWORD'
+     sh 'cf login -a http://api.run.pivotal.io'
      sh 'cf push'
 }
   }
