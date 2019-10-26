@@ -15,7 +15,7 @@ node {
                 def mvnHome = tool name: 'M2' , type: 'maven'
                 sh "${mvnHome}/bin/mvn package"
     }
-     withCredentials([usernameColonPassword(credentialsId: 'pcf_login', variable: 'pcf')]) {
+     withCredentials([usernamePassword(credentialsId: 'pcf_login', passwordVariable: '', usernameVariable: '')]) {
     // some block
      sh 'cf login -a http://api.run.pivotal.io'
      sh 'cf push'
