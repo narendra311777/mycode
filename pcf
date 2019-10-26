@@ -16,7 +16,7 @@ node {
                 sh "${mvnHome}/bin/mvn package"
     }
     withCredentials([usernamePassword(credentialsId: 'pcf_login', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-     sh 'cf login -a http://api.run.pivotal.io'
+     
      sh 'cf push'
 }
   }
