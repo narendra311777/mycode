@@ -15,8 +15,7 @@ node {
                 def mvnHome = tool name: 'M2' , type: 'maven'
                 sh "${mvnHome}/bin/mvn package"
     }
-    withCredentials([usernamePassword(credentialsId: 'pcf_login', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-     
-     sh 'cf push'
+   withCredentials([usernameColonPassword(credentialsId: 'pcf_login', variable: 'PCF')]) {
+    // some block
 }
   }
