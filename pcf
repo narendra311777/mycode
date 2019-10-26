@@ -14,9 +14,19 @@ node {
     stage('package'){
                 def mvnHome = tool name: 'M2' , type: 'maven'
                 sh "${mvnHome}/bin/mvn package"
-    }
-   withCredentials([usernameColonPassword(credentialsId: 'pcf_login', variable: 'PCF')]) {
-    // some block
-    sh 'cf push'
 }
+ stage ('Deploy') {
+            steps {
+
+                withCredentials([[$class          : 'UsernamePasswordMultiBinding',
+                                  credentialsId   : 'pcf_login',
+                                  usernameVariable: 'USERNAME',
+                                  passwordVariable: 'PASSWORD']]) {
+
+                    sh '/usr/local/bin/cf login -a http://api.run.pivotal.io -u $USERNAME -p $PASSWORD'
+                    sh '/usr/local/bin/cf push'
+                }
+            }
+
+        }
   }
