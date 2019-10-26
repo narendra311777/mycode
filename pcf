@@ -17,5 +17,6 @@ node {
     }
    withCredentials([usernameColonPassword(credentialsId: 'pcf_login', variable: 'PCF')]) {
     // some block
+    sh 'cf push'
 }
   }
