@@ -25,7 +25,7 @@ node {
 
                     sh 'cf login -a http://api.run.pivotal.io -u $USERNAME -p $PASSWORD'
                     
-                    sh 'cf push mycode'
+                    sh 'cf push practice777 -p target/addressbook.war'
                 
             }
 
