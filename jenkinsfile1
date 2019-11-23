@@ -15,8 +15,4 @@ node {
                 def mvnHome = tool name: 'M2' , type: 'maven'
                 sh "${mvnHome}/bin/mvn package"
     }
-     sshagent(['tomcatdev']) {
-    // some block
-    sh 'scp -o StrictHostKeyChecking=no target/*.war root@192.168.1.157:/opt/apache/webapps'
-    }
-  }
+    
