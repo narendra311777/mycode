@@ -23,7 +23,7 @@
         }
         stage('Deploy to Production'){
          
-                build job: 'deploy_to_prod'
+                build job: 'deploy_to_prod' , propagate: false
             
         }
     }
