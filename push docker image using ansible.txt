@@ -1,0 +1,16 @@
+- name: push image to docker registry
+  hosts: all
+  become: yes
+  tasks:
+  - name: create docker image
+    command: docker build -t  sample:latest .
+    args:
+      chdir: /etc/playbook/Docker
+  - name: tag image
+    command: docker tag sample narendra311777/sample
+  - name: push image
+    command: docker push narendra311777/sample
+  - name: remove image
+    command: docker rmi sample:latest narendra311777/sample
+    ignore_errors: yes
+
