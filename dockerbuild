@@ -7,7 +7,7 @@ node {
      app = docker.build("narendra311777/mycode")
      }
    stage('publish-image'){
-     docker.withRegistry('https://registry.hub.docker.com','docker'){
+     docker.withRegistry('https://registry.hub.docker.com','DOcker'){
      app.push("${env.BUILD_NUMBER}")
      app.push("latest")
 }
