@@ -15,4 +15,11 @@ node {
                 def mvnHome = tool name: 'M2' , type: 'maven'
                 sh "${mvnHome}/bin/mvn package"
     }
+    stage('Deploy to Tomcat'){
+      
+      sshagent(['tomcatdev']) {
+    // some block
+    sh 'scp -o StrictHostKeyChecking=no target/*.war root@ip-172-31-33-6:/opt/tomcat/webapps'
+    }
+   }
 }
