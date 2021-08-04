@@ -7,6 +7,12 @@ pipeline {
         //- update your credentials ID after creating credentials for connecting to Docker Hub
         registryCredential = 'docker'
         dockerImage = ''
+        
+        AWS_DEFAULT_REGION="ap-south-1" 
+        IMAGE_REPO_NAME="sample"
+        IMAGE_TAG="narendra311777/mycode"
+        REPOSITORY_URI = "371661025153.dkr.ecr.ap-south-1.amazonaws.com/sample"
+    }
     }
     
     stages {
@@ -43,7 +49,15 @@ pipeline {
        //     sh 'docker container ls -a -fname=mypythonappContainer -q | xargs -r docker container rm'
        //  }
       // }
-    
+     // Uploading Docker images into AWS ECR
+    stage('Pushing to ECR') {
+     steps{  
+         script {
+                sh "docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"
+                sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+         }
+        }
+      }
     
     // Running Docker container, make sure port 8096 is opened in 
     stage('Docker Run') {
