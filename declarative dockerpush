@@ -8,10 +8,12 @@ pipeline {
         registryCredential = 'docker'
         dockerImage = ''
         
+        AWS_ACCOUNT_ID="371661025153"
         AWS_DEFAULT_REGION="ap-south-1" 
         IMAGE_REPO_NAME="sample"
-        IMAGE_TAG="narendra311777/mycode"
-        REPOSITORY_URI = "371661025153.dkr.ecr.ap-south-1.amazonaws.com/sample"
+        IMAGE_TAG="latest"
+        REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+    }
     }
     }
     
