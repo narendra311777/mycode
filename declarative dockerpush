@@ -7,16 +7,13 @@ pipeline {
         //- update your credentials ID after creating credentials for connecting to Docker Hub
         registryCredential = 'docker'
         dockerImage = ''
-        
         AWS_ACCOUNT_ID="371661025153"
         AWS_DEFAULT_REGION="ap-south-1" 
         IMAGE_REPO_NAME="sample"
         IMAGE_TAG="latest"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }
-    }
-    
-    
+       
     stages {
         stage('Cloning Git') {
             steps {
