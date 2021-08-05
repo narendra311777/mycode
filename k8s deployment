@@ -51,27 +51,27 @@ pipeline {
        //  }
       // }
       
-      stage('Approval Step'){
-            steps{
+      //stage('Approval Step'){
+         //   steps{
                 
-                //----------------send an approval prompt-------------
-                script {
-                   env.APPROVED_DEPLOY = input message: 'User input required',
-                   parameters: [choice(name: 'Deploy?', choices: 'no\nyes', description: 'Choose "yes" if you want to deploy this build')]
+          //      //----------------send an approval prompt-------------
+           //     script {
+          //         env.APPROVED_DEPLOY = input message: 'User input required',
+           //        parameters: [choice(name: 'Deploy?', choices: 'no\nyes', description: 'Choose "yes" if you want to deploy this build')]
                        }
                 //-----------------end approval prompt------------
-            }
-        }
-        stage('Approval') {
+          //  }
+       // }
+      //  stage('Approval') {
             // no agent, so executors are not used up when waiting for approvals
-            agent none
-            steps {
-                script {
-                    def deploymentDelay = input id: 'Deploy', message: 'Deploy to production?', submitter: 'rkivisto,admin', parameters: [choice(choices: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'], description: 'Hours to delay deployment?', name: 'deploymentDelay')]
-                    sleep time: deploymentDelay.toInteger(), unit: 'HOURS'
-                }
-            }
-        }
+        //    agent none
+        //    steps {
+          //      script {
+           //         def deploymentDelay = input id: 'Deploy', message: 'Deploy to production?', submitter: 'rkivisto,admin', parameters: [choice(choices: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'], description: 'Hours to delay deployment?', name: 'deploymentDelay')]
+           //         sleep time: deploymentDelay.toInteger(), unit: 'HOURS'
+            //    }
+          //  }
+       // }
         stage('Deploy') {
             agent any
             steps {
@@ -91,22 +91,23 @@ pipeline {
          }
         }
       }
-      stage("deployk8s"){
-       steps{
-       script{
-       sh"kubernetesDeploy configs: 'kdeployment.yaml', kubeConfig: [path: ''], kubeconfigId: 'k8s', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
-"
-
-}
+        stage ('K8S Deploy') {
+       
+                kubernetesDeploy(
+                    configs: 'MyAwesomeApp/springboot-lb.yaml',
+                    kubeconfigId: 'K8S',
+                    enableConfigSubstitution: true
+                    )               
+        }
     }
     }
     // Running Docker container, make sure port 8096 is opened in 
-    stage('Docker Run') {
-     steps{
-         script {
-            dockerImage.run("-p 8096:5000 --rm --name mycode")
-         }
-      }
-    }
+   // stage('Docker Run') {
+    //steps{
+        // script {
+        //    dockerImage.run("-p 8096:5000 --rm --name mycode")
+        // }
+      //}
+   // }
   } 
   }
