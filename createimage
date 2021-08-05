@@ -32,4 +32,11 @@ node {
             app.push("latest")
         }
     }
+    
+    stage ('Kubernetes Deploy') {
+        kubernetesDeploy(
+            configs: 'kdeploy.yaml',
+            kubeconfigId: 'k8s',
+            enableConfigSubstitution: true
+            )
 }
