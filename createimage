@@ -35,7 +35,7 @@ node {
     
     stage ('Kubernetes Deploy') {
         kubernetesDeploy(
-            configs: 'kdeploy.yaml',
+            configs: 'kdeployment.yaml',
             kubeconfigId: 'k8s',
             enableConfigSubstitution: true
             )
