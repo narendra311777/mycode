@@ -1,6 +1,6 @@
 stage("Stage with input") {
     steps {
-      def userInput = false
+     // def userInput = false
         script {
             // build your custom email message here
             emailext (
@@ -8,7 +8,7 @@ stage("Stage with input") {
              body: """Job ${env.JOB_NAME} [${env.BUILD_URL}]""",
              recipientProviders: "b.ramnarendra@gmail.com"
             )
-             userInput = input(
+            def userInput = input(
     id: 'Proceed1', message: 'Proceed or abort?', parameters: [
     [$class: 'BooleanParameterDefinition', defaultValue: false, description: '', name: 'Please confirm you agree with this']
 ])
