@@ -1,0 +1,24 @@
+stage("Stage with input") {
+    steps {
+      def userInput = false
+        script {
+            // build your custom email message here
+            emailext (
+             subject: "Job: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
+             body: """Job ${env.JOB_NAME} [${env.BUILD_URL}]""",
+             recipientProviders: "b.ramnarendra@gmail.com"
+            )
+
+            def userInput = input(id: 'Proceed1', message: 'Promote build?', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']])
+            echo 'userInput: ' + userInput
+
+            if(userInput == true) {
+                // do action
+            } else {
+                // not do action
+                echo "Action was aborted."
+            }
+
+        }    
+    }  
+}
