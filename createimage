@@ -1,22 +1,22 @@
-#sudo usermod -aG docker jenkins
-#jenkins all : no passwd:all
-#sudo chmod 777 /var/run/docker.sock
+//#sudo usermod -aG docker jenkins
+//#jenkins all : no passwd:all
+//#sudo chmod 777 /var/run/docker.sock
 
-#restart jenkins and docker
+//#restart jenkins and docker
 node { 
     stage('scm checkout'){
         git 'https://github.com/narendra311777/mycode.git'
     }
     stage('compile'){
-                def mvnHome = tool name: 'M2' , type: 'maven'
+                def mvnHome = tool name: 'm2' , type: 'maven'
                 sh "${mvnHome}/bin/mvn compile"
     }
     stage('test'){
-                def mvnHome = tool name: 'M2' , type: 'maven'
+                def mvnHome = tool name: 'm2' , type: 'maven'
                 sh "${mvnHome}/bin/mvn test"
     }
  stage('package'){
-                def mvnHome = tool name: 'M2' , type: 'maven'
+                def mvnHome = tool name: 'm2' , type: 'maven'
                 sh "${mvnHome}/bin/mvn package"
     }
     stage('build-image'){
