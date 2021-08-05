@@ -55,17 +55,55 @@ pipeline {
       //   }
      //   }
      // }
-        stage ('K8S Deploy') {
+        //stage ('K8S Deploy') {
         
-        steps{
+      //  steps{
         
-                    kubernetesDeploy(
-                    configs: 'kdeployment.yaml',
-                    kubeconfigId: 'k8s',
-                    enableConfigSubstitution: true
-                    )               
+               //     kubernetesDeploy(
+              //      configs: 'kdeployment.yaml',
+//kubeconfigId: 'k8s',
+                 ///   enableConfigSubstitution: true
+                 //   )               
+     //   }
+       // }
+       
+       stage ('Deploying to Environment') {
+        environment {
+          APP_VERSION = sh(returnStdout: true, script: "git describe --exact-match --tags 2> /dev/null || git rev-parse --short HEAD").trim()
+          TAGGED_IMAGE_NAME = "$APP_NAME:$APP_VERSION"
+          ECRURL = "$ECR/$TAGGED_IMAGE_NAME"
+          COVERAGE_S3_URL = "$COVERAGE_S3_BASE_URL/$APP_NAME-$APP_VERSION"
+          IMAGE = "$ECR/$TAGGED_IMAGE_NAME"
         }
+        steps {
+          script {
+            sh '''
+              set +x
+              source /etc/environment
+              tempCred=$(aws sts assume-role --role-arn $DEPLOY_ARN --role-session-name $EKS_ROLE_SESSION_NAME)
+              access_key=`echo $tempCred | jq -r .Credentials.AccessKeyId`
+              secret_key=`echo $tempCred | jq -r .Credentials.SecretAccessKey`
+              session=`echo $tempCred | jq -r .Credentials.SessionToken`
+              export AWS_ACCESS_KEY_ID=${access_key}
+              export AWS_SECRET_ACCESS_KEY=${secret_key}
+              export AWS_SESSION_TOKEN=${session}
+              export AWS_DEFAULT_REGION="ap-south-1"
+              aws sts get-caller-identity
+              set -x
+              aws eks --region ap-south-1 update-kubeconfig --name $EKS_CLUSTER_NAME
+			  kubectl delete deployment dev-${APP_NAME} -n ${NAMESPACE} || true 
+              kubectl delete service dev-${APP_NAME} -n ${NAMESPACE} || true
+              kubectl delete configmap dev-${CONFIG_MAP} -n ${NAMESPACE} || true
+              kubectl create configmap dev-${CONFIG_MAP} --from-env-file ./${ENV_FILE} -n ${NAMESPACE}
+              kubectl delete secret dev-${SECRET} -n ${NAMESPACE} || true
+              kubectl create secret generic dev-${SECRET} --from-env-file ./${SECRETS_FILE} -n ${NAMESPACE}
+              kubectl run dev-${APP_NAME} --overrides='{"spec":{"template":{"spec":{"containers":[{"name":"'dev-${APP_NAME}'","image":"'$IMAGE'","resources":{"requests":{"memory":"100Mi","cpu":"50m"},"limits":{"memory":"500Mi","cpu":"500m"}},"envFrom":[{"configMapRef":{"name":"'dev-${CONFIG_MAP}'"}},{"secretRef":{"name":"'dev-${SECRET}'"}}]}]}}}}' --replicas=1 --labels=app=dev-${APP_NAME} --image=$IMAGE --port=8080 -n ${NAMESPACE}
+              kubectl expose deployment dev-${APP_NAME} --type=ClusterIP --name=dev-${APP_NAME} --port 8080 -n ${NAMESPACE}
+              kubectl annotate --overwrite svc dev-${APP_NAME} prometheus.io/scrape=true prometheus.io/path=/${CONTEXT_PATH}/actuator/prometheus prometheus.io/port=8080 -n ${NAMESPACE}
+            '''
+          }
         }
+      }
     }
    }
   
