@@ -60,7 +60,7 @@ pipeline {
         steps{
         
                     kubernetesDeploy(
-                    configs: 'MyAwesomeApp/springboot-lb.yaml',
+                    configs: 'kdeployment.yaml',
                     kubeconfigId: 'k8s',
                     enableConfigSubstitution: true
                     )               
