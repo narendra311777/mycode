@@ -92,12 +92,14 @@ pipeline {
         }
       }
       stage("deployk8s"){
-kubernetesDeploy{
-  configs: 'kdeployment.yaml',
-  kubeconfigId: 'k8s', 
+       steps{
+       script{
+       sh"kubernetesDeploy configs: 'kdeployment.yaml', kubeConfig: [path: ''], kubeconfigId: 'k8s', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+"
+
 }
-}
-    
+    }
+    }
     // Running Docker container, make sure port 8096 is opened in 
     stage('Docker Run') {
      steps{
