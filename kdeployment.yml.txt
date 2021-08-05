@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name:project03	
-spec:
+  name: mycode
+  spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: project03
+        app: mycode
     spec:
       containers:
-      - name: project03
-        image: docker push narendra311777/project03
+      - name: mycode
+        image: docker push narendra311777/mycode
         ports:
         - containerPort: 80
