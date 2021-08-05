@@ -2,8 +2,8 @@ node
 {
 
 def jobName = currentBuild.fullDisplayName
-def mailToRecipients = 'bagvananand@hotmail.com'
-def useremail='bagvananand@hotmail.com'
+def mailToRecipients = 'b.ramnarendra@gmail.com'
+def useremail='b.ramnarendra@gmail.com'
 
 stage('Build') 
 {
