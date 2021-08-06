@@ -12,7 +12,7 @@ pipeline {
         IMAGE_REPO_NAME="narendra311777/mycode"
         IMAGE_TAG="latest"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
-        EKS_CLUSTER_NAME = "basic-cluster"
+        EKS_CLUSTER_NAME = "cluster"
     }
        
     stages {
