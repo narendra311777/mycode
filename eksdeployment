@@ -99,7 +99,7 @@ pipeline {
             sh "kubectl get nodes"
             sh "kubectl get pods"
             sh "kubectl create ns ram"
-            sh "kubectl create -f kdeployment.yaml"
+            sh "kubectl create -f pod.yaml"
          }
       }
     }
