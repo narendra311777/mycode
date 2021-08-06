@@ -12,7 +12,7 @@ pipeline {
         IMAGE_REPO_NAME="narendra311777/mycode"
         IMAGE_TAG="latest"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
-        EKS_CLUSTER_NAME = "basic-cluster11"
+        EKS_CLUSTER_NAME = "basic-cluster"
     }
        
     stages {
@@ -35,17 +35,17 @@ pipeline {
     }
     
      // Uploading Docker images into Docker Hub
-    stage('Upload Image') {
-     steps{    
-         script {
-            docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
+   // stage('Upload Image') {
+     //steps{    
+      //   script {
+      //      docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
           //  dockerImage.push()
           //dockerImage.push("${env.BUILD_NUMBER}")
-           dockerImage.push("latest")
-            }
-        }
-      }
-    }
+       //    dockerImage.push("latest")
+      //      }
+   //     }
+   //   }
+   // }
     
      
       
