@@ -12,6 +12,7 @@ pipeline {
         IMAGE_REPO_NAME="narendra311777/mycode"
         IMAGE_TAG="latest"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+        EKS_CLUSTER_NAME = "basic-cluster"
     }
        
     stages {
@@ -54,27 +55,27 @@ pipeline {
        //  }
       // }
       
-      stage('Approval Step'){
-            steps{
+     // stage('Approval Step'){
+          //  steps{
                 
                 //----------------send an approval prompt-------------
-                script {
-                   env.APPROVED_DEPLOY = input message: 'User input required',
-                   parameters: [choice(name: 'Deploy?', choices: 'no\nyes', description: 'Choose "yes" if you want to deploy this build')]
+            //    script {
+              //     env.APPROVED_DEPLOY = input message: 'User input required',
+              //     parameters: [choice(name: 'Deploy?', choices: 'no\nyes', description: 'Choose "yes" if you want to deploy this build')]
                        }
                 //-----------------end approval prompt------------
-            }
-        }
-        stage('Approval') {
+          //  }
+     //   }
+       // stage('Approval') {
             // no agent, so executors are not used up when waiting for approvals
-            agent none
-            steps {
-                script {
-                    def deploymentDelay = input id: 'Deploy', message: 'Deploy to production?', submitter: 'rkivisto,admin', parameters: [choice(choices: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'], description: 'Hours to delay deployment?', name: 'deploymentDelay')]
-                    sleep time: deploymentDelay.toInteger(), unit: 'HOURS'
-                }
-            }
-        }
+          //  agent none
+          //  steps {
+            //    script {
+             //       def deploymentDelay = input id: 'Deploy', message: 'Deploy to production?', submitter: 'rkivisto,admin', parameters: [choice(choices: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'], description: 'Hours to delay deployment?', name: 'deploymentDelay')]
+               //     sleep time: deploymentDelay.toInteger(), unit: 'HOURS'
+              //  }
+            //}
+        //}
         stage('Deploy') {
             agent any
             steps {
@@ -99,7 +100,9 @@ pipeline {
     stage('Docker Run') {
      steps{
          script {
-            dockerImage.run("-p 8096:5000 --rm --name mycode")
+            //dockerImage.run("-p 8096:5000 --rm --name mycode")
+            sh "aws eks --region ap-south-1 update-kubeconfig --name $EKS_CLUSTER_NAME"
+            sh "kubectl get nodes"
          }
       }
     }
