@@ -62,7 +62,7 @@ pipeline {
             //    script {
               //     env.APPROVED_DEPLOY = input message: 'User input required',
               //     parameters: [choice(name: 'Deploy?', choices: 'no\nyes', description: 'Choose "yes" if you want to deploy this build')]
-                       }
+              //       }
                 //-----------------end approval prompt------------
           //  }
      //   }
@@ -76,15 +76,15 @@ pipeline {
               //  }
             //}
         //}
-        stage('Deploy') {
-            agent any
-            steps {
+      //stage('Deploy') {
+         // agent any
+         // steps {
                 // uses https://plugins.jenkins.io/lockable-resources
-                lock(resource: 'deployApplication'){
-                    echo 'Deploying...'
-                }
-            }
-        }
+             // lock(resource: 'deployApplication'){
+            //      echo 'Deploying...'
+            //  }
+          //}
+      //}
      // Uploading Docker images into AWS ECR
     stage('Pushing to ECR') {
      steps{  
@@ -101,7 +101,8 @@ pipeline {
      steps{
          script {
             //dockerImage.run("-p 8096:5000 --rm --name mycode")
-            sh "aws eks --region ap-south-1 update-kubeconfig --name $EKS_CLUSTER_NAME"
+            //sh "aws eks --region ap-south-1 update-kubeconfig --name $EKS_CLUSTER_NAME"
+            sh "aws eks update-kubeconfig --name basic-cluster --kubeconfig /home/ubuntu/.kube/config"
             sh "kubectl get nodes"
          }
       }
