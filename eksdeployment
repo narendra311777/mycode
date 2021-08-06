@@ -97,6 +97,9 @@ pipeline {
            // sh "aws eks --region ap-south-1 update-kubeconfig --name $EKS_CLUSTER_NAME"
            // sh "aws eks update-kubeconfig --name cluster --kubeconfig /home/ubuntu/.kube/config"
             sh "kubectl get nodes"
+            sh "kubectl get pods"
+            sh "kubectl create ns ram"
+            sh "kubectl create -f kdeployment.yaml"
          }
       }
     }
