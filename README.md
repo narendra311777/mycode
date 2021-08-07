@@ -1,6 +1,6 @@
  create ec2 instance and apt-get update
  connect ec2 instance through git bash shell
- install jdk 1.8 , install maven ,git, jenkins ,ansible, docker in the same machine and install sonarqube for code analysis
+ install jdk 1.8 , install maven ,git, jenkins ,ansible, docker in the same machine and install sonarqube for code analysis..
  configure jdk and maven plugin home directories
  start service jenkins using service jenkins start
  goto browser and hit the url of jenkins connect jenkins by enter the initial password copied from .jenkins/security file
