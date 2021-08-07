@@ -124,8 +124,9 @@
       
         }
         stage ('deploy in eks'){
+        steps{
         sh "kubectl create -f pod.yaml"
         }
-        
+        }
 }
 }
