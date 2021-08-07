@@ -12,7 +12,7 @@ pipeline {
         IMAGE_REPO_NAME="narendra311777/mycode"
         IMAGE_TAG="latest"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
-        EKS_CLUSTER_NAME = "cluster1"
+        EKS_CLUSTER_NAME = "eks"
     }
        
     stages {
@@ -96,7 +96,7 @@ pipeline {
          script {
             sh "aws eks --region ap-south-1 update-kubeconfig --name $EKS_CLUSTER_NAME"
             //sh "chmod ugo+rwx ~/.kube/config"
-           // sh "aws eks update-kubeconfig --name cluster1 --kubeconfig /home/ubuntu/.kube/config"
+           // sh "aws eks update-kubeconfig --name eks --kubeconfig /home/ubuntu/.kube/config"
             sh "kubectl get nodes"
             sh "kubectl get pods"
             sh "kubectl delete ns ram"
