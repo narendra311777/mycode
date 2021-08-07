@@ -11,6 +11,6 @@ metadata:
     spec:
       containers:
       - name: mycode
-        image: docker push narendra311777/mycode
+        image: narendra311777/mycode:latest
         ports:
         - containerPort: 80
