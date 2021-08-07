@@ -117,7 +117,7 @@
         steps{
         
                     kubernetesDeploy(
-                    configs: 'kdeployment.yaml',
+                    configs: 'pod.yaml',
                     kubeconfigId: 'k8s',
                     enableConfigSubstitution: true
                     )               
