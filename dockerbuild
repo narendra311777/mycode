@@ -21,4 +21,15 @@ node {
          }
         }
       }
+       stage ('K8S Deploy') {
+        
+        steps{
+        
+                    kubernetesDeploy(
+                    configs: 'kdeployment.yaml',
+                    kubeconfigId: 'k8s',
+                    enableConfigSubstitution: true
+                    )               
+      }
+        }
 }
