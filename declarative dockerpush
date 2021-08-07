@@ -106,7 +106,7 @@ pipeline {
        //    // sh "aws eks update-kubeconfig --name basic-cluster --kubeconfig /home/ubuntu/.kube/config"
           //  sh "kubectl get nodes"
        //  }
-   / //  }
+   //  }
    // }
   } 
   
