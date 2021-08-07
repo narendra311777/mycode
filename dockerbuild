@@ -116,7 +116,7 @@
         
         steps{
                     kubernetesDeploy(
-                    configs: 'pod.yaml',
+                    configs: 'kdeployment.yaml',
                     kubeconfigId: 'k8s',
                     enableConfigSubstitution: true
                     )               
@@ -125,7 +125,7 @@
         }
         stage ('deploy in eks'){
         steps{
-        sh "kubectl create -f pod.yaml"
+        sh "kubectl create -f kdeployment.yaml"
         }
         }
 }
