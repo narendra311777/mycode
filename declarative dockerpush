@@ -97,16 +97,16 @@ pipeline {
       }
     
     // Running Docker container, make sure port 8096 is opened in 
-    stage('Docker Run') {
-     steps{
-         script {
+    //stage('Docker Run') {
+     //steps{
+       //  script {
             //dockerImage.run("-p 8096:5000 --rm --name mycode")
-            sh "aws eks --region ap-south-1 update-kubeconfig --name $EKS_CLUSTER_NAME"
-           // sh "aws eks update-kubeconfig --name basic-cluster --kubeconfig /home/ubuntu/.kube/config"
-            sh "kubectl get nodes"
-         }
-      }
-    }
+        //    sh "aws eks --region ap-south-1 update-kubeconfig --name $EKS_CLUSTER_NAME"
+       //    // sh "aws eks update-kubeconfig --name basic-cluster --kubeconfig /home/ubuntu/.kube/config"
+          //  sh "kubectl get nodes"
+       //  }
+   / //  }
+   // }
   } 
   
 }
