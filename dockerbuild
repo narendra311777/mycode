@@ -119,7 +119,10 @@
                     configs: 'kdeployment.yaml',
                     kubeconfigId: 'k8s',
                     enableConfigSubstitution: true
-                    )               
+                    )  
+                    script {
+                  sh "aws eks update-kubeconfig --name myeks --region ap-south-1"
+                  }
       }
       
         }
