@@ -17,7 +17,7 @@
 thank you  
 run the shell script to make artifacts into docker images and pull into dockerhub
 create kubernetes cluster using kubectl or minikube and write deployment and service yaml files to create services to end users.
-we can perform blue green deployment strategy using deployment objects
+we can perform blue green deployment strategy using deployment objects...
 
 
 
