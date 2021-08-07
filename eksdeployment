@@ -97,7 +97,7 @@ pipeline {
          script {
             sh "aws eks --region ap-south-1 update-kubeconfig --name $EKS_CLUSTER_NAME"
             //sh "chmod ugo+rwx ~/.kube/config"
-            sh "aws eks update-kubeconfig --name myeks --kubeconfig /home/ubuntu/.kube/config"
+            //sh "aws eks update-kubeconfig --name myeks --kubeconfig /home/ubuntu/.kube/config"
             sh "kubectl get nodes"
             sh "kubectl get pods"
             sh "kubectl delete ns ram"
