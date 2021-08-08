@@ -94,7 +94,7 @@ pipeline {
     // Running Docker container, make sure port 8096 is opened in 
    // stage('eks') {
      //steps{
-         script {
+         //script {
             //sh "aws eks --region ap-south-1 update-kubeconfig --name $EKS_CLUSTER_NAME"
             //sh "chmod ugo+rwx ~/.kube/config"
          // sh "aws eks update-kubeconfig --name myeks --kubeconfig /home/ubuntu/.kube/config"
