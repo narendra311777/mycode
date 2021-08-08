@@ -118,10 +118,10 @@ pipeline {
     stage('Deploy container') {
       steps {
             withAWS(region: 'ap-south-1', credentials: 'aws') {
-              sh 'kubectl apply -f flask-deployment.yaml'
-              sh 'kubectl apply -f flask-service.json'
-              sh 'kubectl set image deployments/site-deployment site-image=danman28/howdy-site' + ":$BUILD_NUMBER"
-              sh 'kubectl get services -o wide'
+              sh 'kubectl apply -f kdeployment.yaml'
+             // sh 'kubectl apply -f flask-service.json'
+           //   sh 'kubectl set image deployments/site-deployment site-image=danman28/howdy-site' + ":$BUILD_NUMBER"
+            //  sh 'kubectl get services -o wide'
               }
             } 
       }
