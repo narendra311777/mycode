@@ -106,7 +106,7 @@ pipeline {
     //  }
    // }
    
-   stage('Set current kubectl context') {
+   stage('Set current myeks') {
       steps {
             withAWS(region: 'ap-south-1', credentials: 'aws') {
               sh 'kubectl config view'
@@ -129,6 +129,30 @@ pipeline {
         }
       }
     }
+    stage('Set current myeks1') {
+      steps {
+            withAWS(region: 'ap-south-1', credentials: 'aws') {
+              sh 'kubectl config view'
+             //sh 'kubectl config use-context arn:aws:eks:ap-south-1:371661025153:cluster/myeks'
+	    //  sh 'aws eks update-kubeconfig --name myeks --kubeconfig /home/ubuntu/.kube/config'
+
+	    //sh 'aws eks update-kubeconfig --name myeks1 --kubeconfig /home/ubuntu/.kube/config'
+            
+	    sh 'kubectl config use-context arn:aws:eks:ap-south-1:371661025153:cluster/myeks1'
+	  
+	     sh 'kubectl config current-context'
+	    
+             // sh 'aws eks --region ap-south-1 update-kubeconfig --name myeks'
+              sh 'kubectl get nodes'
+              sh 'kubectl get pods --all-namespaces'
+              sh 'kubectl delete ns ram'
+              sh 'kubectl create ns ram'
+	      sh 'kubectl delete -f pod.yaml'
+              sh 'kubectl create -f pod.yaml'
+        }
+      }
+    }
+    
    }
   
 }
