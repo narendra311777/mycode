@@ -112,24 +112,38 @@
         }
       }
     
-       stage ('K8S Deploy') {
+      // stage ('K8S Deploy') {
         
-        steps{
-                    kubernetesDeploy(
-                    configs: 'kdeployment.yaml',
-                    kubeconfigId: 'k8s',
-                    enableConfigSubstitution: true
-                    )  
-                    script {
-                  sh "aws eks update-kubeconfig --name myeks --region ap-south-1"
-                  }
-      }
+       // steps{
+                  ///  kubernetesDeploy(
+                  //  configs: 'kdeployment.yaml',
+                  ///  kubeconfigId: 'k8s',
+                //    enableConfigSubstitution: true
+               //     )  
+                 //   script {
+                //  sh "aws eks update-kubeconfig --name myeks --region ap-south-1"
+               //   }
+    //  }
       
+     //   }
+      //  stage ('deploy in eks'){
+      //  steps{
+      //  sh "kubectl create -f kdeployment.yaml"
+       // }
+       // }
+        stage('Set current kubectl context') {
+      steps {
+            withAWS(region: 'ap-south-1', credentials: 'aws') {
+             // sh 'kubectl config view'
+              //sh 'kubectl config use-context arn:aws:eks:ap-south-1:371661025153:cluster/myeks'
+              sh 'aws eks --region ap-south-1 update-kubeconfig --name myeks'
+              sh 'kubectl get nodes'
+              sh 'kubectl get pods --all-namespaces'
+              sh 'kubectl delete ns ram'
+              sh 'kubectl create ns ram'
+              sh 'kubectl create -f pod.yaml'
         }
-        stage ('deploy in eks'){
-        steps{
-        sh "kubectl create -f kdeployment.yaml"
-        }
-        }
+      }
+    }
 }
 }
