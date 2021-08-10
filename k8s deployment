@@ -135,6 +135,7 @@ pipeline {
     stage('Set current myeks1') {
       steps {
             withAWS(region: 'ap-south-1', credentials: 'aws') {
+	      sh 'aws eks --region ap-south-1 update-kubeconfig --name my-cluster' 
               sh 'kubectl config view'
              //sh 'kubectl config use-context arn:aws:eks:ap-south-1:371661025153:cluster/myeks'
 	    //  sh 'aws eks update-kubeconfig --name myeks --kubeconfig /home/ubuntu/.kube/config'
