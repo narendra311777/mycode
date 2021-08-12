@@ -102,9 +102,9 @@ pipeline {
              // sh 'aws eks --region ap-south-1 update-kubeconfig --name myeks'
               sh 'kubectl get nodes'
               sh 'kubectl get pods --all-namespaces'
-             // sh 'kubectl delete ns ram'
+              sh 'kubectl delete ns ram'
               sh 'kubectl create ns ram'
-	     // sh 'kubectl delete -f pod.yaml'
+	      sh 'kubectl delete -f pod.yaml'
               sh 'kubectl create -f pod.yaml'
         }
       }
@@ -132,9 +132,9 @@ pipeline {
               sh 'kubectl get nodes'
               sh 'kubectl get pods --all-namespaces'
               sh 'kubectl delete ns ram'
-              sh 'kubectl create ns ram'
+            //  sh 'kubectl create ns ram'
 	      sh 'kubectl get ns'
-	          sh 'kubectl delete -f pod.yaml'
+	    //  sh 'kubectl delete -f pod.yaml'
               sh 'kubectl create -f pod.yaml'
               sh 'curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3'
 sh 'chmod 700 get_helm.sh'
@@ -144,7 +144,7 @@ sh 'chmod 700 get_helm.sh'
  sh  'helm repo add nginx-stable https://helm.nginx.com/stable'
 sh 'helm repo update'
  sh 'helm repo list'
- sh 'helm install my-release nginx-stable/nginx-ingress'
+ //sh 'helm install my-release nginx-stable/nginx-ingress'
 sh 'helm ls'
 
         }
