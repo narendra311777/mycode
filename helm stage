@@ -82,7 +82,7 @@ pipeline {
         }
       }
     }
-    stage('Set current my-cluster1') {
+    /*stage('Set current my-cluster1') {
       steps {
             withAWS(region: 'ap-south-1', credentials: 'aws') {
 	      sh 'aws eks update-kubeconfig --name my-cluster1 --region us-east-2'
@@ -108,7 +108,7 @@ pipeline {
               sh 'kubectl create -f pod.yaml'
         }
       }
-    }
+    }*/
     stage('Set current EKS') {
       steps {
             withAWS(region: 'ap-south-1', credentials: 'aws') {
