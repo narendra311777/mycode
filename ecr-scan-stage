@@ -51,12 +51,12 @@ pipeline {
                sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
                //**********************
                
-               sh '''  aws ecr start-image-scan --registry-id 123 \
+               sh '''  aws ecr start-image-scan --registry-id 371661025153 \
            --repository-name narendra311777/mycode \
            --image-id imageTag=${BUILD_NUMBER} --output json | tee ecr_start_scan_${BUILD_NUMBER}.txt'''
 
 
-           sh ''' aws ecr describe-image-scan-findings --registry-id 123 \
+           sh ''' aws ecr describe-image-scan-findings --registry-id 371661025153 \
           --repository-name narendra311777/mycode \
           --image-id imageTag=${BUILD_NUMBER}  --output json | tee ecr_scanResult_${BUILD_NUMBER}.txt'''
                
