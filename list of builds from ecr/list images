@@ -1,0 +1,91 @@
+//install choice parameter plugin
+
+//for listing ecr as build parametes
+
+
+import groovy.json.JsonSlurperClassic
+
+// Get all images with tags as JSON, the --filter is very important to get only images that have a tag
+def cmd = "aws ecr list-images --repository-name MY_IMAGE --filter tagStatus=TAGGED --region us-west-2"
+def ecr_images_json = cmd.execute()
+
+// Parse JSON into Groovy object
+def data = new JsonSlurperClassic().parseText(ecr_images_json.text)
+
+// Prepare the results list
+def ecr_images = [];
+
+// Add all tags
+data.imageIds.each { ecr_images.push(it.imageTag) } 
+
+// Return the list for Jenkins "select-box"
+return ecr_images
+
+
+
+
+//for docker registry
+
+
+// Import the JsonSlurper class to parse Dockerhub API response
+import groovy.json.JsonSlurper
+// Set the URL we want to read from, it is MySQL from official Library for this example, limited to 20 results only.
+docker_image_tags_url = "https://hub.docker.com/v2/repositories/library/mysql/tags/?page_size=20"
+try {
+    // Set requirements for the HTTP GET request, you can add Content-Type headers and so on...
+    def http_client = new URL(docker_image_tags_url).openConnection() as HttpURLConnection
+    http_client.setRequestMethod('GET')
+    // Run the HTTP request
+    http_client.connect()
+    // Prepare a variable where we save parsed JSON as a HashMap, it's good for our use case, as we just need the 'name' of each tag.
+    def dockerhub_response = [:]    
+    // Check if we got HTTP 200, otherwise exit
+    if (http_client.responseCode == 200) {
+        dockerhub_response = new JsonSlurper().parseText(http_client.inputStream.getText('UTF-8'))
+    } else {
+        println("HTTP response error")
+        System.exit(0)
+    }
+    // Prepare a List to collect the tag names into
+    def image_tag_list = []
+    // Iterate the HashMap of all Tags and grab only their "names" into our List
+    dockerhub_response.results.each { tag_metadata ->
+        image_tag_list.add(tag_metadata.name)    
+    }
+    // The returned value MUST be a Groovy type of List or a related type (inherited from List)
+    // It is necessary for the Active Choice plugin to display results in a combo-box
+    return image_tag_list.sort()
+} catch (Exception e) {
+         // handle exceptions like timeout, connection errors, etc.
+         println(e)
+}
+
+
+
+import groovy.json.JsonSlurperClassic
+
+// get new auth token from Google Cloud for this session
+def auth_token = "gcloud auth print-access-token".execute().text.replaceAll("\r\n", "")
+
+// get specific image tags as JSON with all information about each tag, including creation timestamp
+def url = "curl -s -u _token:${auth_token} https://gcr.io/v2/YOUR_PROJECT/YOUR_IMAGE/tags/list"
+def gcr_tags_json = url.execute().text.replaceAll("\r\n", "")
+
+// unwrap JSON to Groovy object
+def data = new JsonSlurperClassic().parseText(gcr_tags_json)
+// prepare an empty hash map to store sorted images later, the "key" will be a timestamp
+def tags_by_date = [:]
+
+// let's sort the images hash map by creation date?
+def timestamps = data.manifest.collect{ it.value.timeCreatedMs }.sort()
+data.manifest.each{ tags_by_date[it.value.timeCreatedMs] = it.value.tag[0] }
+
+
+// remember we always must return a List in order for Jenkins to pick up the result
+def sorted_tags = []
+// simply put the image names into a List, but now it will be in strict order by timestamp (keys)
+for(timestamp in timestamps){
+    sorted_tags.push(tags_by_date[timestamp])
+}
+//for gcr images
+
