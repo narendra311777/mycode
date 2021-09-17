@@ -75,10 +75,17 @@ pipeline {
              // sh 'aws eks --region ap-south-1 update-kubeconfig --name myeks'
               sh 'kubectl get nodes'
               sh 'kubectl get pods --all-namespaces'
-              sh 'kubectl delete ns ram'
+              //sh 'kubectl delete ns ram'
               sh 'kubectl create ns ram'
-	      sh 'kubectl delete -f pod.yaml'
+	     // sh 'kubectl delete -f pod.yaml'
               sh 'kubectl create -f pod.yaml'
+	      sh 'helm version'
+ //sh 'helm repo list'
+ sh  'helm repo add nginx-stable https://helm.nginx.com/stable'
+sh 'helm repo update'
+ sh 'helm repo list'
+ //sh 'helm install my-release nginx-stable/nginx-ingress'
+sh 'helm ls'
         }
       }
     }
