@@ -87,8 +87,8 @@ sh 'helm repo update'
  // sh 'helm delete my-release nginx-stable/nginx-ingress'
 
  sh 'helm install my-release nginx-stable/nginx-ingress'
-  sh 'helm install prometheus stable/prometheus --generate-name'
-sh 'helm ls'
+  sh 'helm install prometheus stable/prometheus'
+sh 'helm ls --all-namespaces'
         }
       }
     }
