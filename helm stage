@@ -84,7 +84,8 @@ pipeline {
  sh  'helm repo add nginx-stable https://helm.nginx.com/stable'
 sh 'helm repo update'
  sh 'helm repo list'
- //sh 'helm install my-release nginx-stable/nginx-ingress'
+ sh 'helm install my-release nginx-stable/nginx-ingress'
+  helm install stable/prometheus
 sh 'helm ls'
         }
       }
