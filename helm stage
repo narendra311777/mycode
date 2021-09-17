@@ -58,7 +58,7 @@ pipeline {
       stage('Set current my-cluster') {
       steps {
             withAWS(region: 'ap-south-1', credentials: 'aws') {
-	      sh 'aws eks update-kubeconfig --name my-cluster --region ap-south-1'
+	      sh 'aws eks update-kubeconfig --name myeks --region ap-south-1'
 	      sh 'kubectl config set-context arn:aws:eks:ap-south-1:371661025153:cluster/my-cluster'
               sh 'kubectl config view'
 	      // sh 'aws eks update-kubeconfig --name my-cluster --kubeconfig /home/ubuntu/var/lib/jenkins/.kube/config'
@@ -85,7 +85,7 @@ pipeline {
     /*stage('Set current my-cluster1') {
       steps {
             withAWS(region: 'ap-south-1', credentials: 'aws') {
-	      sh 'aws eks update-kubeconfig --name my-cluster1 --region us-east-2'
+	      sh 'aws eks update-kubeconfig --name myeks --region us-east-2'
 	      sh 'kubectl config set-context arn:aws:eks:us-east-2:371661025153:cluster/my-cluster1'
               sh 'kubectl config view'
 	      // sh 'aws eks update-kubeconfig --name my-cluster --kubeconfig /home/ubuntu/var/lib/jenkins/.kube/config'
@@ -102,14 +102,21 @@ pipeline {
              // sh 'aws eks --region ap-south-1 update-kubeconfig --name myeks'
               sh 'kubectl get nodes'
               sh 'kubectl get pods --all-namespaces'
-              sh 'kubectl delete ns ram'
+             // sh 'kubectl delete ns ram'
               sh 'kubectl create ns ram'
-	      sh 'kubectl delete -f pod.yaml'
+	     // sh 'kubectl delete -f pod.yaml'
               sh 'kubectl create -f pod.yaml'
+	       sh 'helm version'
+ //sh 'helm repo list'
+ sh  'helm repo add nginx-stable https://helm.nginx.com/stable'
+sh 'helm repo update'
+ sh 'helm repo list'
+ //sh 'helm install my-release nginx-stable/nginx-ingress'
+sh 'helm ls'
         }
       }
     }*/
-    stage('Set current EKS') {
+    /*stage('Set current EKS') {
       steps {
             withAWS(region: 'ap-south-1', credentials: 'aws') {
 	    
@@ -150,7 +157,7 @@ sh 'helm ls'
 
         }
       }
-    }
+    }*/
    /* stage('Run Helm') {
    //   steps {
   //    script {      
