@@ -6,7 +6,7 @@ pipeline {
         //- update your credentials ID after creating credentials for connecting to Docker Hub
         registryCredential = 'docker'
         dockerImage = ''
-        AWS_ACCOUNT_ID="371661025153"
+        AWS_ACCOUNT_ID="114120108253"
         AWS_DEFAULT_REGION="ap-south-1" 
         IMAGE_REPO_NAME="narendra311777/mycode"
         IMAGE_TAG="latest"
@@ -49,7 +49,7 @@ pipeline {
      steps{  
          script {
                sh "docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"
-                sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 371661025153.dkr.ecr.ap-south-1.amazonaws.com"
+                sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 114120108253.dkr.ecr.ap-south-1.amazonaws.com"
                sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
        }
         }
@@ -59,16 +59,16 @@ pipeline {
       steps {
             withAWS(region: 'ap-south-1', credentials: 'aws') {
 	      sh 'aws eks update-kubeconfig --name myeks --region ap-south-1'
-	      sh 'kubectl config set-context arn:aws:eks:ap-south-1:371661025153:cluster/myeks'
+	      sh 'kubectl config set-context arn:aws:eks:ap-south-1:114120108253:cluster/myeks'
               sh 'kubectl config view'
 	      // sh 'aws eks update-kubeconfig --name my-cluster --kubeconfig /home/ubuntu/var/lib/jenkins/.kube/config'
-             sh 'kubectl config use-context arn:aws:eks:ap-south-1:371661025153:cluster/myeks'
+             sh 'kubectl config use-context arn:aws:eks:ap-south-1:114120108253:cluster/myeks'
 	    //  sh 'aws eks update-kubeconfig --name myeks --kubeconfig /home/ubuntu/.kube/config'
               
 
 	    //sh 'aws eks update-kubeconfig --name myeks1 --kubeconfig /home/ubuntu/.kube/config'
             
-	    //sh 'kubectl config use-context arn:aws:eks:ap-south-1:371661025153:cluster/myeks1'
+	    //sh 'kubectl config use-context arn:aws:eks:ap-south-1:114120108253:cluster/myeks1'
 	  
 	     sh 'kubectl config current-context'
 	    
@@ -96,16 +96,16 @@ sh 'helm ls --all-namespaces'
       steps {
             withAWS(region: 'ap-south-1', credentials: 'aws') {
 	      sh 'aws eks update-kubeconfig --name myeks --region us-east-2'
-	      sh 'kubectl config set-context arn:aws:eks:us-east-2:371661025153:cluster/my-cluster1'
+	      sh 'kubectl config set-context arn:aws:eks:us-east-2:114120108253:cluster/my-cluster1'
               sh 'kubectl config view'
 	      // sh 'aws eks update-kubeconfig --name my-cluster --kubeconfig /home/ubuntu/var/lib/jenkins/.kube/config'
-             sh 'kubectl config use-context arn:aws:eks:us-east-2:371661025153:cluster/my-cluster1'
+             sh 'kubectl config use-context arn:aws:eks:us-east-2:114120108253:cluster/my-cluster1'
 	    //  sh 'aws eks update-kubeconfig --name myeks --kubeconfig /home/ubuntu/.kube/config'
               
 
 	    //sh 'aws eks update-kubeconfig --name myeks1 --kubeconfig /home/ubuntu/.kube/config'
             
-	    //sh 'kubectl config use-context arn:aws:eks:ap-south-1:371661025153:cluster/myeks1'
+	    //sh 'kubectl config use-context arn:aws:eks:ap-south-1:114120108253:cluster/myeks1'
 	  
 	     sh 'kubectl config current-context'
 	    
@@ -133,15 +133,15 @@ sh 'helm ls'
 	    sh 'aws eks --region us-east-1 update-kubeconfig --name EKS' 
 	  //sh 'aws eks --region us-east-1 update-kubeconfig --kubeconfig /home/ubuntu/.kube/eks-conf --name EKS'
 	   sh 'kubectl config get-contexts'
-	   sh 'kubectl config use-context arn:aws:eks:us-east-1:371661025153:cluster/EKS'
+	   sh 'kubectl config use-context arn:aws:eks:us-east-1:114120108253:cluster/EKS'
 	     // sh 'aws eks --region us-east-1 update-kubeconfig --name EKS' 
               //sh 'kubectl config view --kubeconfig /home/ubuntu/.kube/eks-conf'
-             //sh 'kubectl config use-context arn:aws:eks:ap-south-1:371661025153:cluster/myeks'
+             //sh 'kubectl config use-context arn:aws:eks:ap-south-1:114120108253:cluster/myeks'
 	    //  sh 'aws eks update-kubeconfig --name myeks --kubeconfig /home/ubuntu/.kube/config'
 
 	    //sh 'aws eks update-kubeconfig --name myeks1 --kubeconfig /home/ubuntu/dev/.kube/config'
             
-	    //sh 'kubectl config use-context arn:aws:eks:us-east-1:371661025153:cluster/EKS'
+	    //sh 'kubectl config use-context arn:aws:eks:us-east-1:114120108253:cluster/EKS'
 	  
 	    // sh 'kubectl config current-context --kubeconfig /home/ubuntu/.kube/eks-conf'
 	    
