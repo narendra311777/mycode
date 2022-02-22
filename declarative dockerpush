@@ -7,7 +7,7 @@ pipeline {
         //- update your credentials ID after creating credentials for connecting to Docker Hub
         registryCredential = 'docker'
         dockerImage = ''
-        AWS_ACCOUNT_ID="371661025153"
+        AWS_ACCOUNT_ID="114120108253"
         AWS_DEFAULT_REGION="ap-south-1" 
         IMAGE_REPO_NAME="narendra311777/mycode"
         //IMAGE_TAG="latest"
@@ -94,8 +94,8 @@ pipeline {
          script {
                //sh " chmod 777 -R /var/run/docker.sock"
                 sh "docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:${TAG}"
-                //sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 371661025153.dkr.ecr.ap-south-1.amazonaws.com"
-                sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 371661025153.dkr.ecr.ap-south-1.amazonaws.com"
+                //sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 114120108253.dkr.ecr.ap-south-1.amazonaws.com"
+                sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 114120108253.dkr.ecr.ap-south-1.amazonaws.com"
                 sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${TAG}"
          }
         }
