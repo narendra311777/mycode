@@ -10,12 +10,12 @@ node {
                 def mvnHome = tool name: 'M2' , type: 'maven'
                 sh "${mvnHome}/bin/mvn test"
     }
-     stage('sonarqube analysis') {
-                def mvnHome = tool name: 'M2' , type: 'maven'
-                withSonarQubeEnv('sonarqube'){
-                sh "${mvnHome}/bin/mvn sonar:sonar"
-                }
-                }
+     //stage('sonarqube analysis') {
+       //         def mvnHome = tool name: 'M2' , type: 'maven'
+         //       withSonarQubeEnv('sonarqube'){
+           //     sh "${mvnHome}/bin/mvn sonar:sonar"
+             //   }
+               // }
      
     stage('package'){
                 def mvnHome = tool name: 'M2' , type: 'maven'
@@ -27,12 +27,12 @@ node {
       //ram''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'sanjay@simpragma.com'
    //}
    
-   stage('Deploy to Tomcat'){
+   //stage('Deploy to Tomcat'){
       
-      sshagent(['tomcatdev']) {
+     // sshagent(['tomcatdev']) {
     // some block
-    sh 'scp -o StrictHostKeyChecking=no target/*.war root@192.168.32.5:/opt/apache/webapps'
-    }
-   }
+   // sh 'scp -o StrictHostKeyChecking=no target/*.war root@192.168.32.5:/opt/apache/webapps'
+   // }
+ //  }
 }
     
