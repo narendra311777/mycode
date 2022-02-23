@@ -128,7 +128,7 @@ pipeline {
               sh 'kubectl get pods --all-namespaces'
              // sh 'kubectl delete ns ram'
               sh 'kubectl create ns ram'
-	      sh 'kubectl delete -f pod.yaml'
+	      //sh 'kubectl delete -f pod.yaml'
               sh 'kubectl create -f pod.yaml'
         }
       }
