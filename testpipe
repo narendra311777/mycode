@@ -1,0 +1,134 @@
+pipeline {
+    agent any 
+    environment {
+        //once you sign up for Docker hub, use that user_id here
+        registry = "narendra311777/mycode"
+        //- update your credentials ID after creating credentials for connecting to Docker Hub
+        registryCredential = 'docker'
+        dockerImage = ''
+        AWS_ACCOUNT_ID="371661025153"
+        AWS_DEFAULT_REGION="ap-south-1" 
+        IMAGE_REPO_NAME="narendra311777/mycode"
+        IMAGE_TAG="latest"
+        REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+        EKS_CLUSTER_NAME = "myeks"
+    }
+       
+    stages {
+        stage('Cloning Git') {
+            steps {
+                //checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://bitbucket.org/ananthkannan/mypythonrepo']]])       
+                  checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/narendra311777/mycode.git']]])       
+            }
+            
+        }
+    
+    // Building Docker images
+    stage('Building image') {
+      steps{
+        script {
+         // dockerImage = docker.build registry
+         dockerImage = docker.build("narendra311777/mycode")
+        }
+      }
+    }
+    
+     // Uploading Docker images into Docker Hub
+   // stage('Upload Image') {
+     //steps{    
+      //   script {
+      //      docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
+          //  dockerImage.push()
+          //dockerImage.push("${env.BUILD_NUMBER}")
+       //    dockerImage.push("latest")
+      //      }
+   //     }
+   //   }
+   // }
+    
+     
+      
+     // stage('Approval Step'){
+          //  steps{
+                
+                //----------------send an approval prompt-------------
+            //    script {
+              //     env.APPROVED_DEPLOY = input message: 'User input required',
+              //     parameters: [choice(name: 'Deploy?', choices: 'no\nyes', description: 'Choose "yes" if you want to deploy this build')]
+              //       }
+                //-----------------end approval prompt------------
+          //  }
+     //   }
+       // stage('Approval') {
+            // no agent, so executors are not used up when waiting for approvals
+          //  agent none
+          //  steps {
+            //    script {
+             //       def deploymentDelay = input id: 'Deploy', message: 'Deploy to production?', submitter: 'rkivisto,admin', parameters: [choice(choices: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'], description: 'Hours to delay deployment?', name: 'deploymentDelay')]
+               //     sleep time: deploymentDelay.toInteger(), unit: 'HOURS'
+              //  }
+            //}
+        //}
+      //stage('Deploy') {
+         // agent any
+         // steps {
+                // uses https://plugins.jenkins.io/lockable-resources
+             // lock(resource: 'deployApplication'){
+            //      echo 'Deploying...'
+            //  }
+          //}
+      //}
+     // Uploading Docker images into AWS ECR
+  //  stage('Pushing to ECR') {
+    // steps{  
+       //  script {
+         //       sh "sudo docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"
+               // sh "sudo aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 371661025153.dkr.ecr.ap-south-1.amazonaws.com"
+           //    sh "sudo aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 371661025153.dkr.ecr.ap-south-1.amazonaws.com"
+             //   sh "sudo docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+         //}
+        //}
+      //}
+    
+    // Running Docker container, make sure port 8096 is opened in 
+  //stage('eks') {
+    //steps{
+         //script {
+            //sh "aws eks --region ap-south-1 update-kubeconfig --name $EKS_CLUSTER_NAME"
+            //sh "chmod ugo+rwx ~/.kube/config"
+          //sh "aws eks update-kubeconfig --name myeks --kubeconfig /home/ubuntu/.kube/config"
+           // sh "kubectl get nodes"
+           // sh "kubectl get pods"
+           // sh "kubectl delete ns ram"
+          //  sh "kubectl create ns ram"
+          //  sh "kubectl create -f pod.yaml -n ram"
+         //}
+      //}
+   // }
+   
+   stage('Set current kubectl context') {
+      steps {
+            withAWS(region: 'ap-south-1', credentials: 'AWS') {
+              sh 'kubectl config view'
+            // sh 'kubectl config use-context arn:aws:eks:ap-south-1:371661025153:cluster/myeks'
+             // sh 'aws eks --region ap-south-1 update-kubeconfig --name myeks'
+              sh 'kubectl get nodes'
+              sh 'kubectl get pods --all-namespaces'
+              sh 'kubectl delete ns ram'
+              sh 'kubectl create ns ram'
+              sh 'kubectl create -f pod.yaml'
+        }
+      }
+    }
+   // stage('Deploy container') {
+     // steps {
+          //  withAWS(region: 'ap-south-1', credentials: 'AWS') {
+             // sh 'kubectl apply -f kdeployment.yaml'
+             // sh 'kubectl apply -f flask-service.json'
+           //   sh 'kubectl set image deployments/site-deployment site-image=danman28/howdy-site' + ":$BUILD_NUMBER"
+            //  sh 'kubectl get services -o wide'
+            //  }
+           // } 
+     // }//
+  }
+}
