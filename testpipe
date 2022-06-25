@@ -109,7 +109,7 @@ pipeline {
    stage('Set current kubectl context') {
       steps {
             withAWS(region: 'ap-south-1', credentials: 'AWS') {
-              sh 'kubectl config view'
+              //sh 'kubectl config view'
               sh 'kubectl config use-context arn:aws:eks:ap-south-1:114120108253:cluster/practice'
              // sh 'aws eks --region ap-south-1 update-kubeconfig --name myeks'
               sh 'kubectl get nodes'
@@ -122,7 +122,7 @@ pipeline {
     }
    // stage('Deploy container') {
      // steps {
-          //  withAWS(region: 'ap-south-1', credentials: 'aws') {
+          //  withAWS(region: 'ap-south-1', credentials: 'AWS') {
              // sh 'kubectl apply -f kdeployment.yaml'
              // sh 'kubectl apply -f flask-service.json'
            //   sh 'kubectl set image deployments/site-deployment site-image=danman28/howdy-site' + ":$BUILD_NUMBER"
