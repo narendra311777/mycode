@@ -11,7 +11,7 @@ pipeline {
         IMAGE_REPO_NAME="narendra311777/mycode"
         IMAGE_TAG="latest"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
-        EKS_CLUSTER_NAME = "myeks"
+        EKS_CLUSTER_NAME = "practice"
     }
        
     stages {
@@ -122,7 +122,7 @@ pipeline {
     }
    // stage('Deploy container') {
      // steps {
-          //  withAWS(region: 'ap-south-1', credentials: 'AWS') {
+          //  withAWS(region: 'ap-south-1', credentials: 'aws') {
              // sh 'kubectl apply -f kdeployment.yaml'
              // sh 'kubectl apply -f flask-service.json'
            //   sh 'kubectl set image deployments/site-deployment site-image=danman28/howdy-site' + ":$BUILD_NUMBER"
