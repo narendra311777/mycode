@@ -109,11 +109,11 @@ pipeline {
    stage('Set current kubectl context') {
       steps {
             withAWS(region: 'ap-south-1', credentials: 'AWS') {
-              //sh 'kubectl config view'
-              sh 'kubectl config use-context arn:aws:eks:ap-south-1:114120108253:cluster/practice'
+              sh 'sudo kubectl config view'
+              sh 'sudo kubectl config use-context arn:aws:eks:ap-south-1:114120108253:cluster/practice'
              // sh 'aws eks --region ap-south-1 update-kubeconfig --name myeks'
-              sh 'kubectl get nodes'
-              sh 'kubectl get pods --all-namespaces'
+              sh 'sudo kubectl get nodes'
+              sh 'sudo kubectl get pods --all-namespaces'
               sh 'kubectl delete ns ram'
               sh 'kubectl create ns ram'
               sh 'kubectl create -f pod.yaml'
