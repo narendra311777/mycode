@@ -1,8 +1,8 @@
-#sudo usermod -aG docker jenkins
-#jenkins all : no passwd:all
-#sudo chmod 777 /var/run/docker.sock
+//#sudo usermod -aG docker jenkins
+//#jenkins all : no passwd:all
+//#sudo chmod 777 /var/run/docker.sock
 
-#restart jenkins and docker
+//#restart jenkins and docker
 node { 
     stage('scm checkout'){
         git 'https://github.com/narendra311777/mycode.git'
