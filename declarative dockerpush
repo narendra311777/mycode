@@ -7,9 +7,9 @@ pipeline {
         //- update your credentials ID after creating credentials for connecting to Docker Hub
         registryCredential = 'docker'
         dockerImage = ''
-        AWS_ACCOUNT_ID="114120108253"
+        AWS_ACCOUNT_ID="804663468933"
         AWS_DEFAULT_REGION="ap-south-1" 
-        IMAGE_REPO_NAME="narendra311777/mycode"
+        IMAGE_REPO_NAME="jenkins"
         //IMAGE_TAG="latest"
         IMAGE_TAG="$BUILD_NUMBER"
         TAG= "LATEST"
